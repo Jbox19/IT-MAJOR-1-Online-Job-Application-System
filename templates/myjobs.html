@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/css/bootstrap.min.css">
+    <title>My Jobs</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+            color: #333;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        .container {
+            width: 80%;
+            max-width: 800px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+
+        h2 {
+            font-size: 24px;
+            border-bottom: 2px solid #ccc;
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+            color: #333;
+        }
+
+        ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        li {
+            margin-top: 20px;
+            padding: 20px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            transition: box-shadow 0.3s ease-in-out;
+        }
+
+        li:hover {
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        h3 {
+            color: darkslategrey;
+            margin-top: 0;
+            margin-bottom: 25px;
+        }
+
+        p {
+            margin: 8px 0;
+        }
+
+        ul.applicants {
+            list-style: none;
+            padding: 0;
+        }
+
+        ul.applicants li {
+            margin-top: 10px;
+        }
+
+        a {
+            color: #1e88e5;
+            text-decoration: none;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>   
+    <div class="container">
+        <a href="/employer_dashboard" class="back-button btn btn-light"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-left" viewBox="0 0 16 16">
+        <path fill-rule="evenodd" d="M12.354 4.354a.5.5 0 0 0 0-.708L9.707.146a.5.5 0 0 0-.708 0l-8 8a.5.5 0 0 0 0 .708l8 8a.5.5 0 0 0 .708 0l2.647-2.647a.5.5 0 0 0 0-.708L5.707 8l6.647-6.646z"/>
+    </svg></a>
+        <h1>Welcome, {{ username }}!</h1>
+
+        <h2>My Job Posts</h2>
+        <ul>
+            {% for job, applicants in job_applicants.items() %}
+                <li>
+                    <h3>{{ job[2] }}</h3>
+                    <p><strong>Position:</strong> {{ job[3] }}</p>
+                    <p><strong>Description:</strong> {{ job[4] }}</p>
+                    <p><strong>Work Hour:</strong> {{ job[5] }}</p>
+                    <p><strong>Salary per Hour:</strong> {{ job[6] }}</p>
+                   
+                    <h4>Applicants:</h4>
+                    <ul class="applicants">
+                        {% for applicant in applicants %}
+                            <li>
+                                <p><strong>Name:</strong> {{ applicant[1] }} {{ applicant[2] }}</p>
+                                <p><strong>Email:</strong> {{ applicant[3] }}</p>
+                                <p>
+                                    {% if applicant[4] %}
+                                        <a href="{{ url_for('view_file', filename=applicant[4]) }}" target="_blank">Resume</a>
+                                    {% endif %}
+                                </p>
+                                <p>
+                                    {% if applicant[5] %}
+                                        <a href="{{ url_for('view_file', filename=applicant[5]) }}" target="_blank">Certificate</a>
+                                    {% endif %}
+                                </p>
+                            </li>
+                        {% endfor %}
+                    </ul>
+                </li>
+            {% endfor %}
+        </ul>
+    </div>
+</body>
+</html>

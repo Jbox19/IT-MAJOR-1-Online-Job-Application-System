@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Approved</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/css/bootstrap.min.css">
+    <style type="text/css">
+        h1 {
+            text-align: center;
+            margin: 2rem 0;
+        }
+
+        .container {
+            margin-top: 5rem;
+        }
+
+        .back-button {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+        }
+    </style>
+</head>
+<body>
+<a href="/admin_dashboard" class="back-button btn btn-light"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-left" viewBox="0 0 16 16">
+            <path fill-rule="evenodd" d="M12.354 4.354a.5.5 0 0 0 0-.708L9.707.146a.5.5 0 0 0-.708 0l-8 8a.5.5 0 0 0 0 .708l8 8a.5.5 0 0 0 .708 0l2.647-2.647a.5.5 0 0 0 0-.708L5.707 8l6.647-6.646z"/>
+        </svg></a>
+    <h1>Approved Application Form</h1>
+    <div class="container">
+        <table class="table table-bordered">
+            <thead class="table-dark">
+            <tr>
+                <th>firstname</th>
+                <th>lastname</th>
+                <th>email</th>
+                <th>User Type</th>
+                <th>Resume</th>
+                <th>Certificate</th>
+                <th>Username</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for app in approved %}
+            <tr>
+                <td>{{app[1]}}</td>
+                <td>{{app[2]}}</td>
+                <td>{{app[3]}}</td>
+                <td>{{app[4]}}</td>
+                <td>
+                    {% if app[5] %}
+                        <a href="{{ url_for('view_file', filename=app[5]) }}" target="_blank">{{ app[5] }}</a>
+                    {% endif %}
+                </td>
+                <td>
+                    {% if app[6] %}
+                        <a href="{{ url_for('view_file', filename=app[6]) }}" target="_blank">{{ app[6] }}</a>
+                    {% endif %}
+                </td>
+                <td>{{app[7]}}</td>
+            </tr>
+            {% endfor %}
+        </tbody>        
+    </table>
+</body>
+</html>
